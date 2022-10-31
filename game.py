@@ -13,7 +13,7 @@ BRICK_WIDTH_RATIO = 4
 BRICK_SPEED_RATIO = 8000
 JUMP_HEIGHT_DIFF_RATIO = 100_000
 JUMP_HEIGHT_INITIAL_RATIO = 500
-BRICK_Y_DIST_RATIO = 0.15
+BRICK_Y_DIST_RATIO = 0.19
 BALL_HORIZONTAL_SPEED_RATIO = 1000
 
 ball_y = screeny * 0.7
@@ -49,7 +49,8 @@ def updateBricks():
         bricks.append((random.uniform(0, screenx - width),
          miny - screeny * BRICK_Y_DIST_RATIO,
           width, 10))
-    bricks = list(map(lambda brick:  (brick[0], brick[1] + screeny / BRICK_SPEED_RATIO, brick[2], brick[3]), bricks))
+    fallingSpeed = screeny / BRICK_SPEED_RATIO * (1+score/10)
+    bricks = list(map(lambda brick:  (brick[0], brick[1] + fallingSpeed, brick[2], brick[3]), bricks))
 
 def intersect_bricks(pos):
     for brick in bricks:
@@ -101,7 +102,10 @@ while running:
         pygame.draw.rect(screen, black, pygame.Rect(x))
     pygame.draw.circle(screen, (100, 100, 255), (ball_x, ball_y), 10)
 
-    ball_y += speed_y
+    if speed_y < 0:
+        ball_y += speed_y 
+    else:
+        ball_y += speed_y * (1+score/10)
     speed_y += screeny / JUMP_HEIGHT_DIFF_RATIO
 
     brick_index = intersect_bricks((ball_x, ball_y))
