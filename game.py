@@ -119,7 +119,7 @@ while running:
     pygame.display.flip()
 
     if ball_y > screeny:
-        game_over_text = game_over_font.render('You have lost        Your score is '+str(score), False, (255, 255, 255))
+        game_over_text = game_over_font.render('You are a looser     Your score is '+str(score), False, (255, 255, 255))
         screen.fill(black)
         screen.blit(game_over_text, (screenx/2 - game_over_text.get_width()/2,screeny/2 - game_over_text.get_height()/2))
         pygame.display.flip()
